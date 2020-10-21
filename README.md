@@ -97,7 +97,7 @@ Replace the options with the following:
 
 _Step 3:_ Update the MX priority field with `or $dnsrecord.type eq "SRV"` in the 'if/else' block. 
 
-This 'if' statement is used twice in the file. Replace both.
+This 'if' statement is used only once in the file. Replace it.
 
 ```
 {if $dnsrecord.type eq "MX"} 
