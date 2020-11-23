@@ -1,6 +1,7 @@
 <?php
 namespace OpenProvider\WhmcsRegistrar\Controllers\Hooks;
 
+use OpenProvider\WhmcsRegistrar\src\Configuration;
 use WeDevelopCoffee\wPower\Models\Registrar;
 use WHMCS\Database\Capsule;
 use OpenProvider\WhmcsRegistrar\src\OpenProvider;
@@ -78,10 +79,10 @@ jQuery( document ).ready(function() {
             return false;
 
         // Check if we are allowed to make a redirect.
-        $newDnsStatus = Registrar::getByKey('openprovider', 'useNewDnsManagerFeature', '');
+        $newDnsStatus = Configuration::getOrDefault('useNewDnsManagerFeature', false);
 
 
-        if($newDnsStatus != 'on')
+        if($newDnsStatus != true)
             return false;
 
         // Let's get the URL.

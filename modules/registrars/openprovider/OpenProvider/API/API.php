@@ -790,26 +790,18 @@ class API
     }
 
     /**
-     * Check domain availability.
-     * Limit on the number of domains is 15 per time.
-     * If number of domains is over than 15 it will check only 15 first domains.
-     *
-     * @param array of \OpenProvider\API\Domain $domains
+     * Check domain availability
+     * @param array of \OpenProvider\API\Domain $domainss
      * @return type
-     * @see https://doc.openprovider.eu/API_Module_Domain_checkDomainRequest
      */
     public function checkDomainArray($domains)
     {
-        $domainsLimitPerRequest = 15;
         $domainArgs = [];
         foreach($domains as $domain)
         {
             $tmpArg['name']         = $domain->name;
             $tmpArg['extension']    = $domain->extension;
             $domainArgs[]           = $tmpArg;
-            $domainsLimitPerRequest   -= 1;
-            if ($domainsLimitPerRequest == 0)
-                break;
         }
 
         $args = array

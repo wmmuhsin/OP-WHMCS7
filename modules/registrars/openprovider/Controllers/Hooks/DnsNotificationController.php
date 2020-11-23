@@ -2,6 +2,7 @@
 namespace OpenProvider\WhmcsRegistrar\Controllers\Hooks;
 
 use OpenProvider\OpenProvider;
+use OpenProvider\WhmcsRegistrar\src\Configuration;
 use WeDevelopCoffee\wPower\Models\Registrar;
 use WeDevelopCoffee\wPower\Core\Core;
 use OpenProvider\API\API;
@@ -49,7 +50,7 @@ class DnsNotificationController{
     public function notify ($params)
     {
         $domain = $this->domain->find($params['domainid']);
-        if($domain->registrar != 'openprovider' || Registrar::getByKey('openprovider','require_op_dns_servers', 'on') != 'on')
+        if($domain->registrar != 'openprovider' || Configuration::getOrDefault('require_op_dns_servers', true) != true)
             return;
 
         $openprovider = new OpenProvider();

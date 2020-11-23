@@ -55,7 +55,16 @@ return [
         'hookPoint' => 'ClientAreaPageDomainDNSManagement',
         'priority'  => 1,
         'controller' => 'DnsAuthController@redirectDnsManagementPage'
-    ]
-
+    ],
+    [
+        'hookPoint' => 'AdminClientProfileTabFields',
+        'priority'  => 1,
+        'controller'=> 'AdminClientProfileTabController@additionalFields',
+    ],
+    [
+        'hookPoint' => 'AdminClientProfileTabFieldsSave',
+        'priority'  => 1,
+        'controller'=> 'AdminClientProfileTabController@saveFields',
+    ],
 ];
 
