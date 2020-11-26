@@ -70,6 +70,6 @@ class Configuration
     public static function getApiUrl($apiMethod)
     {
         $serverUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://{$_SERVER[HTTP_HOST]}";
-        return "{$serverUrl}/modules/registrars/openprovider/api/{$apiMethod}";
+        return "{$serverUrl}/whmcs/modules/registrars/openprovider/api/{$apiMethod}";
     }
 }
