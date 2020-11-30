@@ -49,7 +49,7 @@ return [
     [
         'hookPoint' => 'ClientAreaPrimarySidebar',
         'priority'  => 1,
-        'controller' => 'DnsAuthController@replaceDnsMenuItem'
+        'controller' => 'ClientAreaPrimarySidebarController@show'
     ],
     [
         'hookPoint' => 'ClientAreaPageDomainDNSManagement',

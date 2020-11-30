@@ -51,5 +51,11 @@ return [
     'getDomainSuggestionOptions' => 'DomainSuggestionOptionsController@get',
 
     // Cron
-    'DownloadTldPricesCron' => 'DownloadTldPricesCronController@Download'
+
+    'DownloadTldPricesCron' => 'DownloadTldPricesCronController@Download',
+
+    // Api
+    'updateContactsTagApi'   => 'ApiController@updateContactsTag',
+    'updateDnsSecRecordApi'  => 'ApiController@updateDnsSecRecord',
+    'updateDnsSecEnabledApi' => 'ApiController@updateDnsSecEnabled',
 ];
