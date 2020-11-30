@@ -90,8 +90,6 @@ $primarySidebar->getChild('Domain Details Management')
     ->setUri("clientarea.php?action=domaincontacts&domainid={$domainId}")
     ->setOrder(40);
 
-//Menu::context();
-
 $ca->setTemplate('dnssec');
 
 $ca->output();

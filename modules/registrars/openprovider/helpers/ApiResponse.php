@@ -12,12 +12,12 @@ class ApiResponse
 
     public static function error($code = 400, $message = 'Bad request')
     {
-        $result = array_merge([
+        $result = [
             'code' => $code,
             'success' => false,
             'error' => true,
             'message' => $message,
-        ]);
+        ];
         echo json_encode($result);
     }
 }
