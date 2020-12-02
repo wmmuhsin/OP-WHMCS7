@@ -47,6 +47,7 @@ $ca->assign('isDnssecEnabled', $isDnssecEnabled);
 $ca->assign('apiUrlUpdateDnssecRecords', Configuration::getApiUrl('dnssec-record-update'));
 $ca->assign('apiUrlTurnOnOffDnssec', Configuration::getApiUrl('dnssec-enabled-update'));
 $ca->assign('domainId', $domainId);
+$ca->assign('jsModuleUrl', Configuration::getJsModuleUrl('dnssec'));
 
 $ca->addToBreadCrumb('index.php', Lang::trans('globalsystemname'));
 $ca->addToBreadCrumb('clientarea.php', Lang::trans('clientareatitle'));
