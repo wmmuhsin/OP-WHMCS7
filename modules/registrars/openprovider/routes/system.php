@@ -41,17 +41,17 @@ return [
     'getDomainSuggestions' => 'DomainSuggestionsController@get',
 
     // Various
-    'idProtect'                  => 'IdProtectController@toggle',
-    'requestDelete'              => 'RequestDeleteController@request',
-    'getEppCode'                 => 'EppController@get',
-    'transferSync'               => 'TransferSyncController@sync',
-    'domainSync'                 => 'DomainSyncController@sync',
-    'checkAvailability'          => 'CheckAvailabilityController@check',
-    'getTldPricing'              => 'TldPricingController@get',
-    'getDomainSuggestionOptions' => 'DomainSuggestionOptionsController@get',
+    'idProtect'                   => 'IdProtectController@toggle',
+    'requestDelete'               => 'RequestDeleteController@request',
+    'getEppCode'                  => 'EppController@get',
+    'transferSync'                => 'TransferSyncController@sync',
+    'domainSync'                  => 'DomainSyncController@sync',
+    'checkAvailability'           => 'CheckAvailabilityController@check',
+    'getTldPricing'               => 'TldPricingController@get',
+    'getDomainSuggestionOptions'  => 'DomainSuggestionOptionsController@get',
+    'resendIRTPVerificationEmail' => 'IRTPVerificationEmailController@resend',
 
     // Cron
-
     'DownloadTldPricesCron' => 'DownloadTldPricesCronController@Download',
 
     // Api

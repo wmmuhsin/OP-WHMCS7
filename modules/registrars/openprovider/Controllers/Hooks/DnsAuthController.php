@@ -1,12 +1,16 @@
 <?php
-
 namespace OpenProvider\WhmcsRegistrar\Controllers\Hooks;
-
 
 use OpenProvider\WhmcsRegistrar\Helpers\DNS;
 
-class DnsAuthController
-{
+/**
+ * Class DnsAuthController
+ * OpenProvider Registrar module
+ *
+ * @copyright Copyright (c) Openprovider 2018
+ */
+
+class DnsAuthController {
     public function redirectDnsManagementPage ($params)
     {
         if($url = DNS::getDnsUrlOrFail($params['domainid']))

@@ -133,9 +133,9 @@ class DomainController extends BaseController
                 $domainRegistration->isPrivateWhoisEnabled = 1;
             
             //use dns templates
-            if($params['dnsTemplate'] && $params['dnsTemplate'] != 'None')
+            if(isset($params['dnsTemplate']) && !empty($params['dnsTemplate']))
             {
-                $domainRegistration->nsTemplateName =   $params['dnsTemplate'];
+                $domainRegistration->nsTemplateName = $params['dnsTemplate'];
             }
             
             $idn = new idna_convert();
@@ -212,14 +212,14 @@ class DomainController extends BaseController
 
             // Check if premium is enabled. If so, set the received premium cost.
             if($params['premiumEnabled'] == true && $params['premiumCost'] != '')
-                $domainRegistration->acceptPremiumFee = $this->premiumDomain->getRegistrarPriceWhenResellerPriceMatches('transfer', $params['sld'], $params['tld'], $params['premiumCost']);
+                $domainTransfer->acceptPremiumFee = $this->premiumDomain->getRegistrarPriceWhenResellerPriceMatches('transfer', $params['sld'], $params['tld'], $params['premiumCost']);
 
             if($params['idprotection'] == 1)
                 $domainTransfer->isPrivateWhoisEnabled = 1;
 
-            if($params['dnsTemplate'] && $params['dnsTemplate'] != 'None')
+            if(isset($params['dnsTemplate']) && !empty($params['dnsTemplate']))
             {
-                $domainTransfer->nsTemplateName =   $params['dnsTemplate'];
+                $domainTransfer->nsTemplateName = $params['dnsTemplate'];
             }
             
             if(isset($additionalFields['domainAdditionalData']))
