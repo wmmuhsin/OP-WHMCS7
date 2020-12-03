@@ -83,7 +83,7 @@ class AdminClientProfileTabController
         ";
 
         return [
-            'Tag' => "<select tabindex='50' class='form-control input-300' name='additionalFieldTag'><option value=''>not set</option>{$options}</select>",
+            'Tag' => "<select tabindex='50' class='form-control input-300' name='additionalFieldTag'><option value=''>no tags</option>{$options}</select>",
             'Update customer tags (might take a while)' => '<button class="update-contacts-tag">Update</button>' . $onClickUpdateContactsTag,
         ];
     }
