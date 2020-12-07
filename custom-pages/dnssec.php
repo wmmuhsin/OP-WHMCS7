@@ -6,8 +6,9 @@ use OpenProvider\WhmcsRegistrar\src\OpenProvider;
 
 define('CLIENTAREA', true);
 
-const PAGE_TITLE = 'DNSSEC Records';
-const PAGE_NAME  = 'DNSSEC Records';
+const PAGE_TITLE  = 'DNSSEC Records';
+const PAGE_NAME   = 'DNSSEC Records';
+const MODULE_NAME = 'dnssec';
 
 require __DIR__ . '/init.php';
 
@@ -47,7 +48,8 @@ $ca->assign('isDnssecEnabled', $isDnssecEnabled);
 $ca->assign('apiUrlUpdateDnssecRecords', Configuration::getApiUrl('dnssec-record-update'));
 $ca->assign('apiUrlTurnOnOffDnssec', Configuration::getApiUrl('dnssec-enabled-update'));
 $ca->assign('domainId', $domainId);
-$ca->assign('jsModuleUrl', Configuration::getJsModuleUrl('dnssec'));
+$ca->assign('jsModuleUrl', Configuration::getJsModuleUrl(MODULE_NAME));
+$ca->assign('cssModuleUrl', Configuration::getCssModuleUrl(MODULE_NAME));
 
 $ca->addToBreadCrumb('index.php', Lang::trans('globalsystemname'));
 $ca->addToBreadCrumb('clientarea.php', Lang::trans('clientareatitle'));
@@ -91,6 +93,6 @@ $primarySidebar->getChild('Domain Details Management')
     ->setUri("clientarea.php?action=domaincontacts&domainid={$domainId}")
     ->setOrder(40);
 
-$ca->setTemplate('dnssec');
+$ca->setTemplate('/modules/registrars/openprovider/includes/templates/dnssec.tpl');
 
 $ca->output();

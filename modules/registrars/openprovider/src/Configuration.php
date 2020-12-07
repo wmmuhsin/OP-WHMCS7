@@ -64,7 +64,12 @@ class Configuration
 
     public static function getJsModuleUrl($jsModuleName)
     {
-        return self::_getServerUrl() . "/templates/six/js/modules/{$jsModuleName}.js";
+        return self::_getServerUrl() . "/modules/registrars/openprovider/includes/templates/js/modules/{$jsModuleName}.js";
+    }
+
+    public static function getCssModuleUrl($cssModuleName)
+    {
+        return self::_getServerUrl() . "/modules/registrars/openprovider/includes/templates/css/modules/{$cssModuleName}.css";
     }
 
     private static function _getServerUrl()

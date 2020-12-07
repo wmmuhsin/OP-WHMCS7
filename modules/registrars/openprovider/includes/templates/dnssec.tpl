@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="{$cssModuleUrl}">
 <section class="js-dnssec-module">
     <div class="row d-flex align-items-center">
 
@@ -67,12 +68,10 @@
     {/if}
 </section>
 <script>
-
     // define php variables to js module
     const domainId                  = {$domainId},
           apiUrlUpdateDnssecRecords = '{$apiUrlUpdateDnssecRecords}',
           apiUrlTurnOnOffDnssec     = '{$apiUrlTurnOnOffDnssec}';
-
 </script>
 
 <script src="{$jsModuleUrl}"></script>

@@ -21,7 +21,7 @@ $(document).on('ready', function () {
 
     function handleAddNewRecord(e) {
         e.preventDefault();
-        addNewRecordButton.hide();
+        addNewRecordButton.addClass('hidden');
         let dnsSecRecordTemplate = `
             <tr>
                 <td>
@@ -75,7 +75,7 @@ $(document).on('ready', function () {
             }).done(function (reply) {
                 const data = JSON.parse(reply);
                 if (data.success) {
-                    addNewRecordButton.show();
+                    addNewRecordButton.removeClass('hidden');
                     renderTable(data.dnssecKeys);
                 } else {
                     showHideErrorMessage(data.message);
