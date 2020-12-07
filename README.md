@@ -21,12 +21,9 @@ Features
 2. Upload `modules/registrars/openprovider` to `<WHMCS directory>/modules/registrars`
 3. [Optional] Upload `modules/addons/openprovider` to `<WHMCS directory>/modules/addons`
 4. Upload `custom-pages/*` to `<WHMCS directory>/*`
-5. Upload `templates/six/*.tpl` to `<WHMCS directory>/templates/six/*.tpl`
-6. Upload `templates/six/css/custom.css` to `<WHMCS directory>/templates/six/css/custom.css`
-7. Upload `templates/six/js/modules` to `<WHMCS directory>/templates/six/js/modules`
-8. Navigate to **Setup > Products/Services > Domain Registrars** and activate Openprovider. Use `https://api.openprovider.eu` as the API url. DNS templates are loaded once valid login details are saved. Use the table below as a reference
-9. Click **Save**
-10. Select the DNS template (if needed)
+5. Navigate to **Setup > Products/Services > Domain Registrars** and activate Openprovider. Use `https://api.openprovider.eu` as the API url. DNS templates are loaded once valid login details are saved. Use the table below as a reference
+6. Click **Save**
+7. Select the DNS template (if needed)
 
 ![alt text](http://pic001.filehostserver.eu/133632.png "Openprovider registrar configuration screen")
 
