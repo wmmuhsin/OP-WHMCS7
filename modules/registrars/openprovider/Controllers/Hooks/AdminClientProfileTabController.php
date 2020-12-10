@@ -2,11 +2,13 @@
 
 namespace OpenProvider\WhmcsRegistrar\Controllers\Hooks;
 
-use Illuminate\Support\Facades\App;
+use Carbon\Carbon;
+use OpenProvider\WhmcsRegistrar\enums\DatabaseTable;
+use OpenProvider\WhmcsRegistrar\helpers\DB as DBHelper;
 use OpenProvider\WhmcsRegistrar\src\Configuration;
 use OpenProvider\WhmcsRegistrar\src\OpenProvider;
-use WeDevelopCoffee\wPower\Core\Core;
-use OpenProvider\API\API;
+use WHMCS\Database\Capsule;
+
 /**
  * Class AdminClientProfileTabController
  * OpenProvider Registrar module
@@ -19,9 +21,9 @@ class AdminClientProfileTabController
 {
     public function additionalFields($vars)
     {
-        $tagsData = [];
-        $customerEmail = $vars['model']->email;
-        $OpenProvider  = new OpenProvider();
+        $tagsData     = [];
+        $userId       = $vars['userid'];
+        $OpenProvider = new OpenProvider();
 
         try {
             $tagsData = $OpenProvider->api->sendRequest('searchTagRequest');
@@ -34,21 +36,17 @@ class AdminClientProfileTabController
             }, $tagsData['results']);
         }
 
-        $customers = [];
-        try {
-            $params = [
-                'emailPattern' => $customerEmail,
-            ];
-            $customers = $OpenProvider->api->sendRequest('searchCustomerRequest', $params);
-        } catch (\Exception $e) {}
-
         $selectedTag = '';
-        if (count($customers['results']) > 0) {
-            $customer = $customers['results'][0];
-            $selectedTag = isset($customer['tags'][0])
-                ? $customer['tags'][0]['value']
-                : '';
-        }
+        try {
+            $clientTag = false;
+            if (DBHelper::checkTableExist(DatabaseTable::ClientTags))
+                $clientTag = Capsule::table(DatabaseTable::ClientTags)
+                    ->where('clientid', $userId)
+                    ->first();
+
+            if ($clientTag)
+                $selectedTag = $clientTag->tag;
+        } catch (\Exception $e) {}
 
         $options = false;
         if (count($tags))
@@ -63,7 +61,6 @@ class AdminClientProfileTabController
     $('.update-contacts-tag').on('click', function (e) {
         e.preventDefault();
         let btn = $(this);
-        let tag = $('select[name=additionalFieldTag]').val();
         const searchUrlParams = new URLSearchParams(window.location.search);
         let userid = searchUrlParams.has('userid') ? searchUrlParams.get('userid') : '';
         btn.attr('disabled', true);
@@ -71,7 +68,6 @@ class AdminClientProfileTabController
             method: 'GET',
             url: '" . Configuration::getApiUrl('contacts-tag-update') . "',
             data: {
-                tag,
                 userid,
             }
         }).done(function (reply) {
@@ -84,51 +80,38 @@ class AdminClientProfileTabController
 
         return [
             'Tag' => "<select tabindex='50' class='form-control input-300' name='additionalFieldTag'><option value=''>no tags</option>{$options}</select>",
-            'Update customer tags (might take a while)' => '<button class="update-contacts-tag">Update</button>' . $onClickUpdateContactsTag,
+            'Update customer tags (might take a while, save changes before start)' => '<button class="update-contacts-tag">Update</button>' . $onClickUpdateContactsTag,
         ];
     }
 
     public function saveFields($vars)
     {
         $tag = $vars['additionalFieldTag'];
-        $customerEmail = $vars['email'];
-        $tags = $tag
-            ? [
-                [
-                    'key' => 'customer',
-                    'value' => $tag,
-                ]
-            ]
-            : '';
+        $userId = $vars['userid'];
 
-        $OpenProvider = new OpenProvider();
-        $api = $OpenProvider->api;
-
-        $customers = [];
-        try {
-            $params = [
-                'emailPattern' => $customerEmail,
-            ];
-
-            $customers = $api->sendRequest('searchCustomerRequest', $params);
-        } catch (\Exception $e) {}
-
-        if (count($customers['results']) > 0) {
-            $customer = $customers['results'][0];
-            if ($customer['tags'] == $tags || (isset($customer['tags'][0]['value']) && $customer['tags'][0]['value'] == $tag)) {
-                return;
-            }
-
-            $customerHandle = $customers['results'][0]['handle'];
-
-            $params = [
-                'handle' => $customerHandle,
-                'tags' => $tags,
-            ];
-
+        if (!DBHelper::checkTableExist(DatabaseTable::ClientTags)) {
             try {
-                $reply = $api->sendRequest('modifyCustomerRequest', $params);
+                Capsule::schema()
+                    ->create(
+                        DatabaseTable::ClientTags,
+                        function ($table) {
+                            $table->increments('id');
+                            $table->bigInteger('clientid');
+                            $table->string('tag');
+                            $table->timestamps();
+                        }
+                    );
             } catch (\Exception $e) {}
+        }
+
+        try {
+            Capsule::table(DatabaseTable::ClientTags)
+                ->updateOrInsert(
+                    ['clientid' => $userId],
+                    ['tag' => $tag, 'updated_at' => Carbon::now()]
+                );
+        } catch (\Exception $e) {
+            var_dump($e->getMessage());die;
         }
     }
 }

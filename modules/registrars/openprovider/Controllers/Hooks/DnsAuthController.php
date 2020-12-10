@@ -1,7 +1,7 @@
 <?php
 namespace OpenProvider\WhmcsRegistrar\Controllers\Hooks;
 
-use OpenProvider\WhmcsRegistrar\Helpers\DNS;
+use OpenProvider\WhmcsRegistrar\helpers\DNS;
 
 /**
  * Class DnsAuthController

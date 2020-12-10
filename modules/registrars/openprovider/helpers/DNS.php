@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenProvider\WhmcsRegistrar\Helpers;
+namespace OpenProvider\WhmcsRegistrar\helpers;
 
 use OpenProvider\WhmcsRegistrar\src\Configuration;
 use OpenProvider\WhmcsRegistrar\src\OpenProvider;

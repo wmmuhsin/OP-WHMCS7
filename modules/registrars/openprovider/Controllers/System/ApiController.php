@@ -4,7 +4,9 @@
 namespace OpenProvider\WhmcsRegistrar\Controllers\System;
 
 
+use OpenProvider\WhmcsRegistrar\enums\DatabaseTable;
 use OpenProvider\WhmcsRegistrar\helpers\ApiResponse;
+use OpenProvider\WhmcsRegistrar\helpers\DB as DBHelper;
 use OpenProvider\WhmcsRegistrar\src\OpenProvider;
 use WeDevelopCoffee\wPower\Controllers\BaseController;
 use WeDevelopCoffee\wPower\Core\Core;
@@ -28,9 +30,9 @@ class ApiController extends BaseController
 
     /**
      * Api function for update contacts tags.
-     * Params is whmcs 'userid' and openprovider 'tag'.
+     * Params is whmcs 'userid'.
      *
-     * @param array $params [userId, tag]
+     * @param array $params [userId]
      */
     public function updateContactsTag($params)
     {
@@ -41,28 +43,21 @@ class ApiController extends BaseController
             )
             ? intval($params['userid'])
             : false;
-        if ($userId === false) {
-            ApiResponse::error(400, 'user id is required!');
-            return;
-        }
 
-        $tag = isset($params['tag'])
-            ? (
-                empty($params['tag'])
-                    ? ''
-                    : [
-                        [
-                            'key' => 'customer',
-                            'value' => $params['tag']
-                        ]
-                    ]
-            )
-            : false;
+        $tag = '';
+        if (DBHelper::checkTableExist(DatabaseTable::ClientTags))
+            $tag = Capsule::table(DatabaseTable::ClientTags)
+                ->where('clientid', $userId)
+                ->first();
 
-        if ($tag === false) {
-            ApiResponse::error(400, 'tag is required!');
-            return;
-        }
+        $tags = $tag && $tag->tag
+            ? [
+                [
+                    'key' => 'customer',
+                    'value' => $tag->tag,
+                ]
+            ]
+            : '';
 
         $usersContacts = Capsule::table('wHandles')
             ->where([
@@ -75,7 +70,7 @@ class ApiController extends BaseController
                 return $contact->handle;
             });
 
-        $this->_modifyContactsTag($usersContacts, $tag);
+        $this->_modifyContactsTag($usersContacts, $tags);
 
         ApiResponse::success();
     }

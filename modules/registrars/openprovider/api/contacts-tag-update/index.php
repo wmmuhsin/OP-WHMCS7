@@ -3,7 +3,6 @@
 include ('../api.php');
 
 $params = [
-    'tag'    => $_GET['tag'],
     'userid' => $_GET['userid'],
 ];
 
